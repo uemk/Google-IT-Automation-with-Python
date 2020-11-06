@@ -7,7 +7,12 @@ PATH = "supplier-data/descriptions/"
 URL = "http://localhost/fruits/"
 
 
-def fruits_upload(url, path):
+def fruits_upload(url: str, path: str) -> None:
+    """
+    Posts data about fruits to a given url.
+    :param url: url for uploading the data
+    :param path: path to directory with text files holding fruit descriptions
+    """
     for infile in os.listdir(path):
         if infile.endswith('.txt'):
             fruit = {}
@@ -15,6 +20,7 @@ def fruits_upload(url, path):
                 fruit['name'] = txt_file.readline().strip('\n\r')
                 fruit['weight'] = int(txt_file.readline().strip('\n\r').split(' ')[0])
                 fruit['description'] = txt_file.readline().strip('\n\r')
+                # to bind previously uploaded fruit image with fruit description
                 fruit['image_name'] = infile.replace('.txt', '.jpeg')
 
                 print(fruit)
@@ -27,4 +33,3 @@ def fruits_upload(url, path):
 
 
 fruits_upload(URL, PATH)
-

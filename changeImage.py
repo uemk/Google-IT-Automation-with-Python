@@ -7,7 +7,12 @@ from PIL import Image
 PATH = "supplier-data/images/"
 
 
-def change_image(source_dir, dest_dir):
+def change_image(source_dir: str, dest_dir: str) -> None:
+    """
+    Changes TIFF images in source_dir: resizing to (600, 400) and changing format to JPEG.
+    Then saves modified images in dest_dir.
+    """
+
     error = False
     try:
         if not os.path.exists(source_dir):
@@ -45,5 +50,5 @@ def change_image(source_dir, dest_dir):
         print("Image transformation finished successfully")
 
 
+# modify images in the same directory
 change_image(PATH, PATH)
-

@@ -11,7 +11,7 @@ DISC_THRESHOLD = 20  # percent (error if available disc space lower than thresho
 MEMORY_THRESHOLD = 500  # MB (error if available memory lower than threshold)
 
 
-def check_cpu_usage(cpu_threshold):
+def check_cpu_usage(cpu_threshold: int) -> str:
     cpu_usage = psutil.cpu_percent()
     print(f"cpu usage: {cpu_usage}%")
     if cpu_usage > cpu_threshold:
@@ -19,7 +19,7 @@ def check_cpu_usage(cpu_threshold):
     return 'OK'
 
 
-def check_disc_usage(disc_threshold):
+def check_disc_usage(disc_threshold: int) -> str:
     disc_available = 100 - psutil.disk_usage('/').percent
     print(f"disc available: {disc_available}%")
     if disc_available < disc_threshold:
@@ -27,7 +27,7 @@ def check_disc_usage(disc_threshold):
     return 'OK'
 
 
-def check_memory_usage(memory_threshold):
+def check_memory_usage(memory_threshold: int) -> str:
     memory_available = psutil.virtual_memory().available / 1000000
     print(f"memory available: {int(memory_available)}MB")
     if memory_available < memory_threshold:
@@ -35,7 +35,7 @@ def check_memory_usage(memory_threshold):
     return 'OK'
 
 
-def check_hostname():
+def check_hostname() -> str:
     local_address = socket.gethostbyname('localhost')
     print(f"local address: {local_address}")
     if local_address != '127.0.0.1':
@@ -43,7 +43,7 @@ def check_hostname():
     return 'OK'
 
 
-def send_error_email(subject):
+def send_error_email(subject: str) -> None:
     sender = "automation@example.com"
     recipient = "{}@example.com".format(os.environ["USER"])
     body = "Please check your system and resolve the issue as soon as possible."
@@ -54,7 +54,7 @@ def send_error_email(subject):
         print(f"Cannot send an e-mail => {err}")
 
 
-def monitoring():
+def monitoring() -> None:
 
     subject = {"cpu": "Error - CPU usage is over {}%".format(CPU_THRESHOLD),
                "disc": "Error - Available disk space is less than {}%".format(DISC_THRESHOLD),
@@ -76,6 +76,3 @@ def monitoring():
 
 monitoring()
 
-# to launch this script every minute edit crontab:
-# (bash) crontab -e
-# (cronetab) * * * * * full_path_to_health_check.py
